@@ -297,8 +297,7 @@ namespace telldus_v8 {
 		Isolate* isolate = Isolate::GetCurrent();
 
 		SensorEventBaton *baton = static_cast<SensorEventBaton *>(req->data);
-		EventContext *ctx = static_cast<EventContext *>(baton->eventContext);
-		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, ((v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> >)ctx->callback));
+		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, ((v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> >)(static_cast<EventContext *>(baton->eventContext))->callback));
 
 		Local<Value> args[] = {
 			Number::New(isolate, baton->sensorId),
