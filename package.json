@@ -1,6 +1,6 @@
 {
-  "name": "telldus",
-  "version": "0.0.9",
+  "name": "nodejs-telldus",
+  "version": "0.0.1",
   "description": "node wrapper for telldus-core, based on telldus-core-js",
   "keywords": [
     "telldus",
@@ -8,10 +8,10 @@
     "TellStick",
     "home automation"
   ],
-  "author": "Robin Nilsson <robinnilsson@gmail.com>",
+  "author": "Zebastian Berg <zebastian.berg@gmail.com>,Robin Nilsson <robinnilsson@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Hexagon/node-telldus.git"
+    "url": "https://github.com/Zebusch/nodejs-telldus.git"
   },
   "engines": {
     "node": ">= 0.6.19"
