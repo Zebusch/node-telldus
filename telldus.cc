@@ -18,7 +18,7 @@ using namespace std;
 namespace telldus_v8 {
 
 	struct EventContext {
-		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> callback;
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > callback;
 	};
 
 	struct DeviceEventBaton {
@@ -244,7 +244,7 @@ namespace telldus_v8 {
 
 		DeviceEventBaton *baton = static_cast<DeviceEventBaton *>(req->data);
 		EventContext *ctx = static_cast<EventContext *>(baton->eventContext);
-		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, ((v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>>)ctx->callback));
+		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, ((v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> >)ctx->callback));
 
 		Local<Value> args[] = {
 			Number::New(isolate, baton->deviceId),
@@ -277,7 +277,7 @@ namespace telldus_v8 {
 		Isolate* isolate = Isolate::GetCurrent();
 
 		v8::Local<v8::Function> cb = v8::Local<v8::Function>::Cast(args[0]);
-		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> value(isolate, cb);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > value(isolate, cb);
 
 		EventContext *ctx = new EventContext();
 		ctx->callback = value;
@@ -298,7 +298,7 @@ namespace telldus_v8 {
 
 		SensorEventBaton *baton = static_cast<SensorEventBaton *>(req->data);
 		EventContext *ctx = static_cast<EventContext *>(baton->eventContext);
-		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, ((v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>>)ctx->callback));
+		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, ((v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> >)ctx->callback));
 
 		Local<Value> args[] = {
 			Number::New(isolate, baton->sensorId),
@@ -341,7 +341,7 @@ namespace telldus_v8 {
 		Isolate* isolate = Isolate::GetCurrent();
 
 		v8::Local<v8::Function> cb = v8::Local<v8::Function>::Cast(args[0]);
-		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> value(isolate, cb);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > value(isolate, cb);
 
 		EventContext *ctx = new EventContext();
 		ctx->callback = value;
@@ -362,7 +362,7 @@ namespace telldus_v8 {
 
 		RawDeviceEventBaton *baton = static_cast<RawDeviceEventBaton *>(req->data);
 		EventContext *ctx = static_cast<EventContext *>(baton->eventContext);
-		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, ((v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>>)ctx->callback));
+		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, ((v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> >)ctx->callback));
 
 		Local<Value> args[] = {
 			Number::New(isolate, baton->controllerId),
@@ -396,7 +396,7 @@ namespace telldus_v8 {
 		Isolate* isolate = Isolate::GetCurrent();
 
 		v8::Local<v8::Function> cb = v8::Local<v8::Function>::Cast(args[0]);
-		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> value(isolate, cb);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > value(isolate, cb);
 
 		EventContext *ctx = new EventContext();
 		ctx->callback = value;
