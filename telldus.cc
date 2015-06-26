@@ -297,7 +297,8 @@ namespace telldus_v8 {
 		Isolate* isolate = Isolate::GetCurrent();
 
 		SensorEventBaton *baton = static_cast<SensorEventBaton *>(req->data);
-		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, ((v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> >)(static_cast<EventContext *>(baton->eventContext))->callback));
+		EventContext *ctx = static_cast<EventContext *>(baton->eventContext);
+		v8::Local<v8::Function> func = v8::Local<v8::Function>::New(isolate, (ctx->callback));
 
 		Local<Value> args[] = {
 			Number::New(isolate, baton->sensorId),
@@ -321,7 +322,6 @@ namespace telldus_v8 {
 	void SensorEventCallback(const char *protocol, const char *model, int sensorId, int dataType, const char *value, int ts, int callbackId, void *callbackVoid) {
 		EventContext *ctx = static_cast<EventContext *>(callbackVoid);
 		SensorEventBaton *baton = new SensorEventBaton();
-
 		baton->eventContext = ctx;
 		baton->sensorId = sensorId;
 		baton->protocol = strdup(protocol);
@@ -340,10 +340,11 @@ namespace telldus_v8 {
 		Isolate* isolate = Isolate::GetCurrent();
 
 		v8::Local<v8::Function> cb = v8::Local<v8::Function>::Cast(args[0]);
-		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > value(isolate, cb);
+		v8::Persistent<v8::Function> persistentFunction;
+		persistentFunction.Reset(isolate, cb);
 
 		EventContext *ctx = new EventContext();
-		ctx->callback = value;
+		ctx->callback = persistentFunction;
 
 		if (!args[0]->IsFunction()) {
 			v8::Local<v8::Value> exception = Exception::TypeError(v8::String::NewFromUtf8(isolate, "Expected 1 argument: (function callback)"));
@@ -389,7 +390,6 @@ namespace telldus_v8 {
 		uv_queue_work(uv_default_loop(), req, (uv_work_cb)RawDataEventCallbackWorking, (uv_after_work_cb)RawDataEventCallbackAfter);
 
 	}
-
 
 	void addRawDeviceEventListener(const v8::FunctionCallbackInfo<v8::Value>& args){
 		Isolate* isolate = Isolate::GetCurrent();
@@ -662,7 +662,6 @@ namespace telldus_v8 {
 
 		args.GetReturnValue().Set(retstr);
 	}
-
 
 	void SyncCaller(const v8::FunctionCallbackInfo<v8::Value>& args){
 		Isolate* isolate = Isolate::GetCurrent(); // returns NULL
